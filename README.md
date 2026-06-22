@@ -4,6 +4,8 @@ HTML、CSS、JavaScriptで作成したシンプルなToDoアプリです。
 
 ## デモ
 
+https://strangehumen.github.io/todo/
+
 ## 制作背景
 
 日々のタスクを手軽に管理できるアプリが欲しかったため制作しました。
