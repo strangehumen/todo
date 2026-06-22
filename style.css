@@ -1,0 +1,372 @@
+/* =====================
+   リセット & 基本
+   ===================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg:         #141417;
+  --surface:    #1e1e23;
+  --surface2:   #28282f;
+  --border:     #35353f;
+  --text:       #e8e6df;
+  --text-sub:   #8a8898;
+  --accent:     #c8f55a;    /* ライムグリーン：唯一の鮮やかさ */
+  --accent-dim: #9dbf3f;
+  --done-color: #555566;
+  --red:        #ff6b6b;
+  --radius:     14px;
+  --radius-sm:  8px;
+  --font:       'Noto Sans JP', sans-serif;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  min-height: 100svh;
+  padding: 0 0 env(safe-area-inset-bottom, 0);
+}
+
+/* =====================
+   レイアウト
+   ===================== */
+.app-wrapper {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 28px 16px 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* =====================
+   ヘッダー
+   ===================== */
+.app-header {
+  padding-bottom: 4px;
+}
+
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.header-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--accent);
+  text-transform: uppercase;
+}
+
+.task-count {
+  font-size: 12px;
+  color: var(--text-sub);
+  letter-spacing: 0.04em;
+}
+
+.app-title {
+  font-size: clamp(26px, 7vw, 34px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: var(--text);
+}
+
+/* =====================
+   入力エリア
+   ===================== */
+.input-area {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 6px 6px 6px 16px;
+  transition: border-color 0.2s;
+}
+
+.input-area:focus-within {
+  border-color: var(--accent);
+}
+
+.task-input {
+  flex: 1;
+  background: none;
+  border: none;
+  outline: none;
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 15px;
+  padding: 8px 0;
+  min-width: 0;
+}
+
+.task-input::placeholder {
+  color: var(--text-sub);
+}
+
+.add-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  border: none;
+  background: var(--accent);
+  color: #141417;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.add-btn:hover  { background: var(--accent-dim); }
+.add-btn:active { transform: scale(0.93); }
+
+/* =====================
+   フィルターバー
+   ===================== */
+.filter-bar {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  padding: 6px 14px;
+  border-radius: 100px;
+  border: 1.5px solid var(--border);
+  background: none;
+  color: var(--text-sub);
+  font-family: var(--font);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+.filter-btn:hover {
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+.filter-btn.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #141417;
+  font-weight: 700;
+}
+
+/* =====================
+   タスクリスト
+   ===================== */
+.task-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* =====================
+   タスクアイテム
+   ===================== */
+.task-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 14px 14px 16px;
+  transition: border-color 0.2s, opacity 0.2s;
+  animation: slideIn 0.22s ease;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.task-item:hover {
+  border-color: var(--surface2);
+}
+
+.task-item.done {
+  opacity: 0.55;
+  border-color: var(--border);
+}
+
+/* チェックボックス */
+.check-btn {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  background: none;
+  cursor: pointer;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+  transition: all 0.15s;
+  color: transparent;
+}
+
+.check-btn:hover {
+  border-color: var(--accent);
+}
+
+.task-item.done .check-btn {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #141417;
+}
+
+.check-btn svg {
+  width: 13px;
+  height: 13px;
+  stroke: currentColor;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+}
+
+/* タスクテキスト */
+.task-text {
+  flex: 1;
+  font-size: 15px;
+  line-height: 1.55;
+  word-break: break-word;
+  padding-top: 2px;
+  transition: color 0.2s, text-decoration 0.2s;
+}
+
+.task-item.done .task-text {
+  text-decoration: line-through;
+  color: var(--done-color);
+}
+
+/* 削除ボタン */
+.delete-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  border: none;
+  background: none;
+  color: var(--text-sub);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  opacity: 0;
+  transition: all 0.15s;
+  margin-top: -2px;
+}
+
+.task-item:hover .delete-btn {
+  opacity: 1;
+}
+
+.delete-btn:hover {
+  background: rgba(255,107,107,0.15);
+  color: var(--red);
+}
+
+.delete-btn svg {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  fill: none;
+}
+
+/* モバイルでは常に削除ボタン表示 */
+@media (hover: none) {
+  .delete-btn {
+    opacity: 0.6;
+  }
+}
+
+/* =====================
+   空のステート
+   ===================== */
+.empty-state {
+  text-align: center;
+  padding: 48px 16px;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.empty-state.visible {
+  display: flex;
+}
+
+.empty-icon {
+  font-size: 32px;
+  color: var(--accent);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.empty-text {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.empty-sub {
+  font-size: 13px;
+  color: var(--text-sub);
+}
+
+/* =====================
+   フッター
+   ===================== */
+.app-footer {
+  display: flex;
+  justify-content: center;
+}
+
+.clear-btn {
+  background: none;
+  border: 1.5px solid var(--border);
+  border-radius: 100px;
+  color: var(--text-sub);
+  font-family: var(--font);
+  font-size: 13px;
+  padding: 8px 20px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.clear-btn:hover {
+  border-color: var(--red);
+  color: var(--red);
+  background: rgba(255,107,107,0.08);
+}
+
+/* =====================
+   スクロールバー（任意）
+   ===================== */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
